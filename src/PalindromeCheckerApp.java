@@ -18,9 +18,12 @@ public class PalindromeCheckerApp {
 
     public static void main(String[] args){
 
-        String input = "madam";
+        String input = "A man a plan a canal Panama";
         System.out.println("Input String: "+input);
-        boolean isPalindrome = check(input,0,input.length()-1);
+        String normalisedInput = input.replaceAll("\\s+","").toLowerCase();
+        System.out.println("Normalised String: "+normalisedInput);
+
+        boolean isPalindrome = check(normalisedInput,0,normalisedInput.length()-1);
 
         System.out.println("Is it a Palindrome? "+((isPalindrome)?"True":"False"));
 
