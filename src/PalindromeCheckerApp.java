@@ -2,40 +2,59 @@ import java.util.*;
 
 public class PalindromeCheckerApp {
 
-    static class PalindromeService{
-
-        private boolean check(String s,int start, int end){
-            if(start>=end){
-                return true;
-            }
-            else if (s.charAt(start)!=s.charAt(end))            {
-                return false;
-            }
-            else{
-                start++;
-                end--;
-                return check(s,start,end);
-            }
+    interface PalindromeStrategy{
+        public boolean checkPalindrome(String input);
         }
+    static class stackStrategy implements PalindromeStrategy{
 
-        public void checkPalindrome(String input){
+        public boolean checkPalindrome(String input){
+            System.out.println("Implemented Using Stack Strategy!");
             System.out.println("Input String: "+input);
-
-            boolean isPalindrome = check(input,0,input.length()-1);
-
-            System.out.println("Is it a Palindrome? "+((isPalindrome)?"True":"False"));
+            Stack<Character> stack = new Stack<>();
+            boolean isPalindrome = true;
+            for(char c: input.toCharArray()){
+                stack.push(c);
+            }
+            for(char c: input.toCharArray()){
+                if(c!=stack.pop()){
+                    isPalindrome=false;
+                    break;
+                }
+            }
+            return isPalindrome;
         }
         
+    }
+
+    static class dequeStrategy implements PalindromeStrategy{
+        public boolean checkPalindrome(String input){
+            System.out.println("Implemented Using Deque Strategy!");
+            System.out.println("Input String: "+input);
+            Deque<Character> deque = new ArrayDeque<>();
+            boolean isPalindrome = true;
+            for(char c: input.toCharArray()){
+                deque.addLast(c);
+            }
+            while(deque.size()>1) {
+                if (deque.removeFirst() != deque.removeLast()) {
+                    isPalindrome = false;
+                    break;
+                }
+            }
+            return isPalindrome;
+        }
     }
 
 
 
     public static void main(String[] args){
 
-        PalindromeService str1 = new PalindromeService();
-        str1.checkPalindrome("madam");
-        str1.checkPalindrome("sreekesh");
-
+        PalindromeStrategy stackStr = new stackStrategy();
+        PalindromeStrategy queueStr = new dequeStrategy();
+        boolean isPalindrome = stackStr.checkPalindrome("madam");
+        System.out.println("Is it a Palindrome? "+((isPalindrome)?"True":"False"));
+        isPalindrome = queueStr.checkPalindrome("sreekesh");
+        System.out.println("Is it a Palindrome? "+((isPalindrome)?"True":"False"));
 
     }
 }
