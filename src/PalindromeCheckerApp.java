@@ -1,17 +1,16 @@
-import java.util.Deque;
-import java.util.ArrayDeque;
+import java.util.*;
 
 public class PalindromeCheckerApp {
     public static void main(String[] args){
-        String input = "sreekesh";
+        String input = "madam";
         System.out.println("Input String: "+input);
-        Deque<Character> deque = new ArrayDeque<>();
+        LinkedList<Character> ll = new LinkedList<>();
         boolean isPalindrome = true;
         for(char c: input.toCharArray()){
-            deque.addLast(c);
+            ll.addLast(c);
         }
-        while(deque.size()>1){
-            if(deque.removeFirst()!=deque.removeLast()){
+        while(ll.size()>1){
+            if(ll.poll()!=ll.pollLast()){
                 isPalindrome=false;
                 break;
             }
